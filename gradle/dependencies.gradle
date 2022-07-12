@@ -1,0 +1,174 @@
+def versions = [
+
+        // SDK build
+        buildToolsVersion      : '30.0.2',
+        minSdkVersion          : 19,
+        targetSdkVersion       : 30,
+        compileSdkVersion      : 30,
+
+        // Plugins
+        kotlinVersion          : '1.4.32',
+        gradlePluginVersion    : '4.1.2',
+        detekt_plugin_version  : '1.14.1',
+        daggerHiltGradleVersion: "2.28-alpha",
+
+        // Dependencies
+        core_ktx_version       : "1.3.0",
+        appCompatVersion       : '1.2.0',
+        materialVersion        : '1.4.0',
+        constraintlayoutVersion: '2.0.4',
+        navigationVersion      : '2.3.0',
+        multidexVersion        : '2.0.1',
+        recyclerViewVersion    : '1.2.0-alpha06',
+        chuckVersion           : "1.1.0",
+        glideVersion           : '4.11.0',
+        lifecycle_version      : '2.2.0',
+        coroutineCore          : '1.3.5',
+        activityKtxVersion     : '1.1.0',
+        hiltViewModelVersion   : '1.0.0-alpha01',
+        extensionVersion       : '1.1.1',
+        retrofitVersion        : '2.6.0',
+        interceptorVersion     : '4.5.0',
+
+        // tests
+        junitVersion           : '4.13',
+        mockkVersion           : '1.10.2',
+        coreTestingVersion     : '2.1.0',
+        robolectricVersion     : '4.3',
+        testCoreVersion        : '1.3.0',
+        coroutinesTestVersion  : '1.4.2'
+]
+
+ext.libraries = [
+
+        kotlinStb            : implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.0"),
+        coreKtx              : implementation("androidx.core:core-ktx:$versions.core_ktx_version"),
+        appCompat            : implementation("androidx.appcompat:appcompat:$versions.appCompat"),
+        material             : implementation("com.google.android.material:material:$versions.materialVersion"),
+        constraintlayout     : implementation("androidx.constraintlayout:constraintlayout:$versions.constraintlayoutVersion"),
+        fragmentNavigationKtx: implementation("androidx.navigation:navigation-fragment-ktx:$versions.navigationVersion"),
+        uiNavigationKtx      : implementation("androidx.navigation:navigation-ui-ktx:$versions.navigationVersion"),
+        multidex             : implementation("com.android.support:multidex:$versions.multidexVersion"),
+        recyclerview         : implementation("androidx.recyclerview:recyclerview:$versions.recyclerViewVersion"),
+        activityKtx          : implementation("androidx.activity:activity-ktx:$versions.activityKtxVersion"),
+        extensions           : implementation("android.arch.lifecycle:extensions:$versions.extensionVersion"),
+        interceptor          : implementation("com.squareup.okhttp3:logging-interceptor:$versions.interceptorVersion"),
+
+        chuck                : [
+                debug  : debugImplementation("com.readystatesoftware.chuck:library:$versions.chuckVersion"),
+                release: releaseImplementation("com.readystatesoftware.chuck:library-no-op:$versions.chuckVersion")
+        ],
+
+        coroutineKtx         : [
+                core     : implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutineCore"),
+                android  : implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineCore"),
+                viewmodel: implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle_version"),
+                runtime  : implementation("androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycle_version")
+        ],
+
+        glide                : [
+                core    : implementation("com.github.bumptech.glide:glide:$versions.glideVersion"),
+                compiler: kapt("com.github.bumptech.glide:compiler:$versions.glideVersion")
+        ],
+
+        hilt                 : [
+                android     : implementation("com.google.dagger:hilt-android:$versions.daggerHiltGradleVersion"),
+                compiler    : kapt("com.google.dagger:hilt-android-compiler:$versions.daggerHiltGradleVersion"),
+                viewmodel   : implementation("androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltViewModelVersion"),
+                coreCompiler: kapt("androidx.hilt:hilt-compiler:$versions.hiltViewModelVersion")
+        ],
+
+        retrofit             : [
+                core: implementation("com.squareup.retrofit2:retrofit:$versions.retrofitVersion"),
+                gson: implementation("com.squareup.retrofit2:converter-gson:$versions.retrofitVersion")
+        ],
+]
+
+
+ext.testLibraries = [
+        junit          : testImplementation("junit:junit:$versions.junitVersion"),
+        mockk          : testImplementation("io.mockk:mockk:$versions.mockkVersion"),
+        coreTesting    : implementation("androidx.arch.core:core-testing:$versions.coreTestingVersion"),
+        robolectric    : testImplementation("org.robolectric:robolectric:$versions.robolectricVersion"),
+        robolectricCore: testImplementation("androidx.test:core:$versions.testCoreVersion"),
+        coroutinesTest : testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutinesTestVersion")
+]
+
+ext.gradlePlugins = [
+        android: classpath("com.android.tools.build:gradle:$versions.gradlePluginVersion"),
+        kotlin : classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinVersion"),
+        detekt : classpath("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$versions.detekt_plugin_version"),
+        hilt   : classpath("com.google.dagger:hilt-android-gradle-plugin:$versions.daggerHiltGradleVersion")
+]
+
+ext.addDependencies = { DependencyHandler handler, dependencies ->
+    getDependencies(dependencies).each {
+        handler.add(it.config, it.notation)
+    }
+}
+
+def repository = [
+        jitpack: 'https://jitpack.io'
+]
+
+ext.addRepos = { RepositoryHandler handler ->
+    handler.google()
+    handler.jcenter()
+    handler.maven { url repository.jitpack }
+}
+
+static def getDependencies(holder) {
+    def dependencies = new ArrayList<Dependency>()
+
+    if (holder instanceof Dependency) {
+        dependencies.add(holder)
+    } else if (holder instanceof Map) {
+        holder.values().each {
+            dependencies.addAll(getDependencies(it))
+        }
+    } else if (holder instanceof List) {
+        holder.each {
+            dependencies.addAll(getDependencies(it))
+        }
+    }
+
+    return dependencies
+}
+
+static def classpath(notation) {
+    new Dependency('classpath', notation)
+}
+
+static def implementation(notation) {
+    new Dependency('implementation', notation)
+}
+
+static def kapt(notation) {
+    new Dependency('kapt', notation)
+}
+
+static def debugImplementation(notation) {
+    new Dependency('debugImplementation', notation)
+}
+
+static def releaseImplementation(notation) {
+    new Dependency('releaseImplementation', notation)
+}
+
+static def testImplementation(notation) {
+    new Dependency('testImplementation', notation)
+}
+
+static def androidTestImplementation(notation) {
+    new Dependency('androidTestImplementation', notation)
+}
+
+class Dependency {
+    def config
+    def notation
+
+    Dependency(config, notation) {
+        this.config = config
+        this.notation = notation
+    }
+}
