@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="listener"
+            type="com.n11.n11testcase.ui.search.SearchListener" />
+
+        <variable
+            name="item"
+            type="com.n11.n11testcase.domain.model.UserSearchItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="#FFFFFF"
+        app:cardCornerRadius="10dp"
+        android:onClick="@{()->listener.onClickSearchItem(position)}">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dimen_20dp"
+            bind:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_100dp"
+                android:layout_height="@dimen/dimen_100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:layout_marginBottom="@dimen/dimen_10dp"
+                android:scaleType="fitXY"
+                app:setImageUrl="@{item.avatarUrl}"
+                app:visibility="@{item.avatarUrl!=null}"
+                />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:text="@{item.login}"
+                android:textColor="@color/dark"
+                android:textSize="@dimen/ts_14sp"
+                app:visibility="@{item.login!=null}"
+                />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/greyBlue"
+                android:textSize="@dimen/ts_14sp"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/tvReleaseDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/greyBlue"
+                android:textSize="@dimen/ts_14sp"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/btnDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:paddingTop="@dimen/dimen_4dp"
+                android:text="@string/btnDetails"
+                android:textColor="@color/bg_base"
+                android:textSize="@dimen/ts_14sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
+

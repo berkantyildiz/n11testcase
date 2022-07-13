@@ -2,6 +2,7 @@ package com.n11.n11testcase.di
 
 import android.content.Context
 import com.n11.n11testcase.BuildConfig
+import com.n11.n11testcase.data.remote.NetworkService
 import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
@@ -43,4 +44,8 @@ object NetworkModule {
         .baseUrl(baseUrl)
         .client(okHttpClient)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): NetworkService = retrofit.create(NetworkService::class.java)
 }

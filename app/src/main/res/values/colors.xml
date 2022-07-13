@@ -7,4 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#382933</color>
+    <color name="colorWhite">#FFFF</color>
+    <string name="follower_placeholder">100</string>
+    <string name="following_placeholder">100</string>
+
+    <color name="bg_base">#e26b38</color>
+    <color name="bg_texts">#FFF</color>
+    <color name="dark">#161823</color>
+    <color name="greyBlue">#607486</color>
+    <color name="cerulean">#007ac3</color>
+    <color name="dark80">#14161823</color>
+    <color name="silver">#CCCCCC</color>
+    <color name="abbey">#4a4d4e</color>
+
 </resources>

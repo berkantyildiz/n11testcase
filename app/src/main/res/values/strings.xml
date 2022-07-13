@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name_base">n11testcase</string>
+    <string name="btnDetails"><u>Details</u></string>
+    <string name="user">User</string>
+    <string name="no_bio">No Bio</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="user_success">User Successfuly added</string>
+    <string name="user_deleted">User Successfuly Deleted</string>
 </resources>

@@ -2,9 +2,9 @@ def versions = [
 
         // SDK build
         buildToolsVersion      : '30.0.2',
-        minSdkVersion          : 19,
-        targetSdkVersion       : 30,
-        compileSdkVersion      : 30,
+        minSdkVersion          : 31,
+        targetSdkVersion       : 32,
+        compileSdkVersion      : 32,
 
         // Plugins
         kotlinVersion          : '1.4.32',
@@ -53,6 +53,9 @@ ext.libraries = [
         activityKtx          : implementation("androidx.activity:activity-ktx:$versions.activityKtxVersion"),
         extensions           : implementation("android.arch.lifecycle:extensions:$versions.extensionVersion"),
         interceptor          : implementation("com.squareup.okhttp3:logging-interceptor:$versions.interceptorVersion"),
+        livedataKtx          : implementation("androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle_version"),
+
+
 
         chuck                : [
                 debug  : debugImplementation("com.readystatesoftware.chuck:library:$versions.chuckVersion"),
