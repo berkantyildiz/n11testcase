@@ -42,24 +42,12 @@ class DetailViewModel @ViewModelInject constructor(
     val resultUserDetail: LiveData<UserDetail>
         get() = _resultUserDetail
 
-
-    private val _fav = MutableLiveData<List<UserFavorite?>?>()
-    val fav: LiveData<List<UserFavorite?>?>
-        get() = _fav
-
     /**
      * Insert to DB
      */
     private val _resultInsertUserToDb = MutableLiveData<Boolean>()
     val resultInsertUserDb: LiveData<Boolean>
         get() = _resultInsertUserToDb
-
-    /**
-     * Delete from db
-     */
-    private val _resultDeleteFromDb = MutableLiveData<Boolean>()
-    val resultDeleteFromDb: LiveData<Boolean>
-        get() = _resultDeleteFromDb
 
     /**
      * Remote
@@ -82,7 +70,6 @@ class DetailViewModel @ViewModelInject constructor(
      * Local
      */
     private fun addUserToFavDB(userFavoriteEntity: UserFavorite) {
-        val asfasd = ""
         viewModelScope.launch {
             try {
                 userUseCase.addUserToFavDB(userFavoriteEntity)
@@ -94,37 +81,33 @@ class DetailViewModel @ViewModelInject constructor(
     }
 
     private fun deleteUserFromDb(userFavoriteEntity: UserFavorite) {
-        val asfasd = ""
         viewModelScope.launch {
             try {
                 userUseCase.deleteUserFromDb(userFavoriteEntity)
-                _resultDeleteFromDb.postValue(true)
+                _resultInsertUserToDb.postValue(false)
             } catch (e: Exception) {
                 _error.postValue(e.localizedMessage)
             }
         }
     }
-/*
-    fun getFavUserByUsername(username: String) =
-        userUseCase.getFavUserByUsername(username).asLiveData()*/
 
     private fun getFavUserByUsername(username: String) {
         viewModelScope.launch {
             userUseCase.getFavUserByUsername(username).collect {
-                val asdfads = it
-                _fav.postValue(it)
+                val isUserExist:Boolean = it.count() > 0
+                _resultInsertUserToDb.postValue(isUserExist)
             }
         }
     }
 
-    fun beko(tag: Int) {
+    fun setFavorite(tag: Int) {
         when (tag) {
-            0 -> {
+            UN_FAV_USER -> {
                 resultUserDetail.value?.let {
                     deleteUserFromDb(DataMapper.mapUserDetailToUserFavorite(it))
                 }
             }
-            1 -> {
+            FAV_USER -> {
                 resultUserDetail.value?.let {
                     addUserToFavDB(DataMapper.mapUserDetailToUserFavorite(it))
                 }
@@ -141,5 +124,10 @@ class DetailViewModel @ViewModelInject constructor(
                 getFavUserByUsername(it)
             }
         }
+    }
+
+    companion object{
+        const val FAV_USER = 1
+        const val UN_FAV_USER = 0
     }
 }

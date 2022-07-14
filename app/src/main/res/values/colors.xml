@@ -12,6 +12,7 @@
     <color name="colorWhite">#FFFF</color>
     <string name="follower_placeholder">100</string>
     <string name="following_placeholder">100</string>
+    <color name="colorShimmer">#DDDDDD</color>
 
     <color name="bg_base">#e26b38</color>
     <color name="bg_texts">#FFF</color>

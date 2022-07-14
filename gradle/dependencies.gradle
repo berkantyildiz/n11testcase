@@ -29,6 +29,7 @@ def versions = [
         extensionVersion       : '1.1.1',
         retrofitVersion        : '2.6.0',
         interceptorVersion     : '4.5.0',
+        shimmerVersion         : '0.5.0',
 
         // tests
         junitVersion           : '4.13',
@@ -54,6 +55,7 @@ ext.libraries = [
         extensions           : implementation("android.arch.lifecycle:extensions:$versions.extensionVersion"),
         interceptor          : implementation("com.squareup.okhttp3:logging-interceptor:$versions.interceptorVersion"),
         livedataKtx          : implementation("androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycle_version"),
+        shimmer              : implementation("com.facebook.shimmer:shimmer:$versions.shimmerVersion"),
 
 
 

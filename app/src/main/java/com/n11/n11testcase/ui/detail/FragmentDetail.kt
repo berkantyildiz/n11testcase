@@ -20,24 +20,14 @@ class FragmentDetail : BaseFragment<FragmentDetailBinding>() {
         binding.viewModel = viewModel
 
         binding.favButton.setOnClickListener {
-            viewModel.beko(it.tag as Int)
+            viewModel.setFavorite(it.tag as Int)
         }
 
         viewModel.resultInsertUserDb.observe(viewLifecycleOwner) {
             if (it) {
                 toast(getString(R.string.user_success))
-                val icon = R.drawable.ic_baseline_favorite_24
-                binding.favButton.setImageResource(icon)
-                binding.favButton.tag = 0
             }
         }
-        viewModel.resultDeleteFromDb.observe(viewLifecycleOwner) {
-            if (it) {
-                toast(getString(R.string.user_deleted))
-                val icon = R.drawable.ic_baseline_favorite_border_24
-                binding.favButton.setImageResource(icon)
-                binding.favButton.tag = 1
-            }
-        }
+
     }
 }

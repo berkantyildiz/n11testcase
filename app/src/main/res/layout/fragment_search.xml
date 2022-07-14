@@ -32,7 +32,20 @@
             app:layout_constraintTop_toBottomOf="@id/searchCustomView"
             app:setSearchItemResults="@{viewModel.resultUserApi}"
             app:setSearchListener="@{viewModel.onClickSearchItem}"
+            app:setLoadingView="@{baseLoading}"
+            app:setState="@{viewModel.state}"
             tools:listitem="@layout/item_search_result" />
 
+        <include
+            android:id="@+id/baseLoading"
+            layout="@layout/item_base_loading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

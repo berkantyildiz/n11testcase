@@ -13,18 +13,22 @@ object DetailBindingAdapter {
     )
     fun setSearchItemResults(
         floatingActionButton: FloatingActionButton,
-        userFavorite: List<UserFavorite>?
+        isAddedToDb:Boolean?
     ) {
-        userFavorite?.let {
-            if (userFavorite.isEmpty()) {
+        isAddedToDb?.let {
+            if (isAddedToDb) {
+                val icon = R.drawable.ic_baseline_favorite_24
+                floatingActionButton.setImageResource(icon)
+                floatingActionButton.tag = 0
+            }else{
                 val icon = R.drawable.ic_baseline_favorite_border_24
                 floatingActionButton.setImageResource(icon)
                 floatingActionButton.tag = 1
             }
         } ?: run {
-            val icon = R.drawable.ic_baseline_favorite_24
+            val icon = R.drawable.ic_baseline_favorite_border_24
             floatingActionButton.setImageResource(icon)
-            floatingActionButton.tag = 0
+            floatingActionButton.tag = 1
         }
     }
 }
